@@ -72,7 +72,7 @@
 ## 🧠 프로그램 목적
 
 본 플랫폼은  
-**국립경국대학교 디지털새싹 사업단**의  
+**국립XX대학교**의 사업에 사용된 프로그램 코드 일부 입니다.  
 교육 프로그램, 보도자료, 강사 모집 및 사진 기록을  
 한곳에서 관리하기 위한 **통합 웹 시스템**입니다.
 
@@ -89,26 +89,7 @@
 - 관리자 전용 대시보드 시각화 (통계 그래프 포함)  
 - 회원 활동 로그 기록 기능
 
----
 
-## 🖼️ 참고 이미지
-
-| 구분 | 예시 |
-|------|------|
-| **메인 페이지** | ![index preview](https://github.com/baikjuwon/DigitalSeed-GKNU/blob/main/static/image/back2.png) |
-| **활동사진 페이지** | ![photo page](https://github.com/baikjuwon/DigitalSeed-GKNU/blob/main/static/image/basic.jpg) |
-| **CI 로고** | ![GKNU Logo](https://github.com/baikjuwon/DigitalSeed-GKNU/blob/main/static/image/GKNU.png) |
-
----
-
-## 🏫 기관 정보
-
-**국립경국대학교 디지털새싹 사업단**  
-📧 이메일: swaicamp@naver.com  
-📞 문의: 010-5812-8513  
-📍 사업 개요 및 신청 안내: [공식 네이버 카페](https://cafe.naver.com/airoboedu/39)
-
----
 
 ## 🪄 실행 방법
 
