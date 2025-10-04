@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask 웹 게시판 플랫폼 — 개요</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .intro-box, .section-wrapper, .module-grid, .card {
+      box-sizing: border-box;
+    }
+    .intro-box {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 28px;
+      background-color: rgba(255,255,255,0.93);
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .intro-box h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+    .intro-box p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
+    }
+    .section-wrapper {
+      max-width: 1200px;
+      margin: 30px auto 80px;
+      padding: 0 12px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 10px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e5e5e5;
+    }
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card h3 {
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #444;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 14px;
+      font-size: 14px;
+      color: #333;
+    }
+    .kv .k {color:#666}
+    @media (max-width: 960px) {
+      .module-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .module-grid { grid-template-columns: 1fr; }
+    }
+    /* 상단 헤더 텍스트 로고 */
+    .ci-bar-text {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+      color: #1f2937;
+      user-select: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <!-- 헤더 및 메뉴 (이미지 사용 제거) -->
+  <div class="header-wrapper">
+    <div class="ci-bar-text" onclick="location.href='/'" aria-label="사이트 로고(텍스트)">
+      Flask 웹 게시판 플랫폼
+    </div>
+    <div class="menu-bar">
+      <div class="menu-item"><a href="/">메인</a></div>
+      <div class="menu-item"><a href="/program">프로그램 소개</a></div>
+      <div class="menu-item"><a href="/imagepage">활동사진</a></div>
+      <div class="menu-item"><a href="/notice">공지사항</a></div>
+      <div class="menu-item"><a href="/support">강사지원</a></div>
+      <div class="menu-item"><a href="/upload">게시물 작성</a></div>
+      {% if session.get('user_id') %}
+        {% if session.get('role') in ['admin', 'manager'] %}
+        <div class="menu-item"><a href="/admin">관리자페이지</a></div>
+        {% endif %}
+        <div class="menu-item"><a href="/logout">로그아웃</a></div>
+      {% else %}
+        <div class="menu-item"><a href="/login">로그인</a></div>
+        <div class="menu-item"><a href="/new_p">회원가입</a></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- 소개: “사업” 관련 서술 제거, 플랫폼 구성 설명만 표기 -->
+  <div class="intro-box">
+    <h2>플랫폼 개요</h2>
+    <p>
+      이 사이트는 <b>Flask + SQLite</b> 기반의 게시판/사용자 관리 예제로,
+      <b>로그인·권한·게시물 업로드·승인 흐름</b>을 포함한 기본 CMS 구조를 제공합니다.
+      아래에는 실제 화면 대신, <b>어떤 모듈로 구성되어 있는지</b>와
+      <b>라우팅/데이터 구조/권한 체계</b>만 정리합니다.
+    </p>
+  </div>
+
+  <div class="section-wrapper">
+    <div class="section-title">구성 요약</div>
+    <div class="kv">
+      <div class="k">백엔드</div><div>Flask, Flask_SQLAlchemy</div>
+      <div class="k">데이터베이스</div><div>SQLite (database.db 자동 생성)</div>
+      <div class="k">템플릿</div><div>Jinja2 (templates/*.html)</div>
+      <div class="k">정적 리소스</div><div>static/style.css, static/uploads/</div>
+      <div class="k">권한</div><div>admin, manager, user, pending (세션 기반 제어)</div>
+    </div>
+
+    <div class="section-title" style="margin-top:28px;">모듈/페이지 역할</div>
+    <div class="module-grid">
+      <div class="card">
+        <h3>인증 · 회원관리</h3>
+        <ul>
+          <li><b>/login</b> : 로그인 폼, 세션 저장</li>
+          <li><b>/new_p</b> : 회원가입 (최초 가입자는 admin, 이후 pending)</li>
+          <li><b>/logout</b> : 세션 해제</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>게시물 업로드 · 저장</h3>
+        <ul>
+          <li><b>/upload</b> : 제목/카테고리/본문 제출</li>
+          <li>첨부파일은 <code>static/uploads/&lt;카테고리&gt;/</code>에 저장</li>
+          <li>작성 직후 <b>승인 필요</b> (admin/manager가 승인 시 노출)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>게시판 목록</h3>
+        <ul>
+          <li><b>/notice</b> : 공지 리스트</li>
+          <li><b>/news</b> : 보도자료 리스트</li>
+          <li><b>/imagepage</b> : 이미지형 게시판(목록 레이아웃만 유지, 실제 사진 비표시)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>상세 보기</h3>
+        <ul>
+          <li><b>/post/&lt;id&gt;</b> : 단일 게시물 상세</li>
+          <li>템플릿: <code>post_detail.html</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>관리자 콘솔</h3>
+        <ul>
+          <li><b>/admin</b> : 회원 권한 지정, 게시물 승인/삭제</li>
+          <li><b>/set_role/&lt;user_id&gt;/&lt;role&gt;</b> : 등급 변경</li>
+          <li><b>/approve_post/&lt;post_id&gt;</b> : 승인 처리</li>
+          <li><b>/delete/&lt;post_id&gt;</b> : 게시물 삭제</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>데이터 모델</h3>
+        <ul>
+          <li><b>User</b>(username, password, name, role)</li>
+          <li><b>Post</b>(title, category, image, content, date, approved)</li>
+          <li>앱 최초 요청 시 <code>db.create_all()</code>로 테이블 생성</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:28px;">라우팅 흐름</div>
+    <div class="card">
+      <ul>
+        <li><b>비회원</b> : 메인 → 로그인/회원가입만 표시</li>
+        <li><b>pending</b> : 로그인 가능, 업로드 제한, 관리자 승인 필요</li>
+        <li><b>user</b> : 승인된 게시물 조회 가능</li>
+        <li><b>manager/admin</b> : 게시물 승인/삭제, 회원 권한 관리</li>
+      </ul>
+    </div>
+
+    <div class="section-title" style="margin-top:28px;">보안/운영 메모(요약)</div>
+    <div class="card">
+      <ul>
+        <li>비밀번호는 반드시 해시 저장 권장(<code>werkzeug.security</code> 등)</li>
+        <li><code>secret_key</code>는 환경변수/환경파일로 분리</li>
+        <li>업로드 파일 검증 필요(<code>secure_filename</code>, 크기/확장자 제한)</li>
+        <li>권한 체크 데코레이터 도입 권장</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
