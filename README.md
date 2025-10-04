@@ -5,37 +5,6 @@
 교사, 관리자, 학생이 함께 사용할 수 있는 통합형 플랫폼으로  
 프로그램 소개, 게시판, 관리자 승인 시스템을 포함하고 있습니다.
 
----
-
-## 📁 프로젝트 구조
-
-📦 DigitalSeed-GKNU
-├── app.py # Flask 메인 서버 파일
-├── static/
-│ ├── style.css # 전체 페이지 공통 스타일
-│ ├── image/
-│ │ ├── GKNU.png # 상단 CI 로고
-│ │ ├── basic.jpg # 기본 썸네일 이미지
-│ └── uploads/ # 게시물 업로드 이미지 저장 폴더
-├── templates/
-│ ├── index.html # 메인 페이지
-│ ├── login.html # 로그인 페이지
-│ ├── new_p.html # 회원가입 페이지
-│ ├── admin.html # 관리자 페이지
-│ ├── upload.html # 게시물 작성 페이지
-│ ├── notice.html # 공지사항 페이지
-│ ├── news.html # 보도자료 페이지
-│ ├── imagepage.html # 활동사진 페이지
-│ ├── support.html # 강사지원 안내 페이지
-│ └── post_detail.html # 게시물 상세 페이지
-├── database.db # SQLite 데이터베이스 파일
-└── README.md # 깃허브 설명용 파일
-
-yaml
-코드 복사
-
----
-
 ## ⚙️ 기술 스택
 
 | 구분 | 사용 기술 |
