@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>국립경국대학교 디지털새싹</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="header-wrapper">
+    <div class="ci-bar">
+      <img src="{{ url_for('static', filename='image/GKNU.png') }}" onclick="location.href='/'" style="cursor:pointer" alt="CI 로고">
+    </div>
+    <div class="menu-bar">
+      <div class="menu-item"><a href="/">메인</a></div>
+      <div class="menu-item"><a href="/new_p">회원가입</a></div>
+    </div>
+  </div>
+
+  <div class="form-wrapper">
+    <h2 style="text-align:center;">로그인</h2>
+    <form method="POST">
+      <label>아이디</label>
+      <input type="text" name="username" required>
+      <label>비밀번호</label>
+      <input type="password" name="password" required>
+      <input type="submit" value="로그인">
+    </form>
+    <p style="text-align:center; margin-top:20px;">계정이 없으신가요? <a href="{{ url_for('new_p') }}">회원가입</a></p>
+  </div>
+</body>
+</html>

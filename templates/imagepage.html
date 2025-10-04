@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>활동사진 - 국립경국대학교 디지털새싹</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="header-wrapper">
+    <div class="ci-bar">
+      <img src="{{ url_for('static', filename='image/GKNU.png') }}" onclick="location.href='/'">
+    </div>
+    <div class="menu-bar">
+      <div class="menu-item"><a href="/">메인</a></div>
+      <div class="menu-item"><a href="/news">언론보도</a></div>
+      <div class="menu-item"><a href="/imagepage">활동사진</a></div>
+      <div class="menu-item"><a href="/notice">공지사항</a></div>
+      <div class="menu-item"><a href="/support">강사지원</a></div>
+      <div class="menu-item"><a href="/upload">게시물 작성</a></div>
+      {% if session.get('user_id') %}
+        {% if session.get('role') in ['admin', 'manager'] %}
+        <div class="menu-item"><a href="/admin">관리자페이지</a></div>
+        {% endif %}
+        <div class="menu-item"><a href="/logout">로그아웃</a></div>
+      {% else %}
+        <div class="menu-item"><a href="/login">로그인</a></div>
+        <div class="menu-item"><a href="/new_p">회원가입</a></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="photo-wrapper">
+    <h2 style="margin-bottom:20px;">📷 활동사진</h2>
+    <div class="photo-grid">
+      {% for post in posts %}
+      <div class="photo-card">
+        <a href="/post/{{ post.id }}">
+          <img src="{% if post.image %}{{ url_for('static', filename='uploads/' ~ post.image) }}{% else %}{{ url_for('static', filename='image/basic.jpg') }}{% endif %}">
+          <div class="photo-title">{{ post.title }}</div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
